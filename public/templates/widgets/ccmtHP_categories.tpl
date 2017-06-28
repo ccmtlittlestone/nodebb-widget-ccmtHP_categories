@@ -2,7 +2,7 @@
 	<div class="col-lg-12 col-sm-12" has-widget-class="col-lg-9 col-sm-12" has-widget-target="sidebar">
 		<ul class="categories" itemscope itemtype="http://www.schema.org/ItemList">
 			<!-- BEGIN categories -->
-			<li component="categories/category" data-cid="{../cid}" data-numRecentReplies="1" class="row clearfix">
+			<li component="categories/category" data-cid="{../cid}" data-numRecentReplies="1" class="row clearfix c_custom">
 				<meta itemprop="name" content="{../name}">
 
 				<div class="content col-xs-12 <!-- IF config.hideCategoryLastPost -->col-md-10 col-sm-12<!-- ELSE -->col-md-7 col-sm-9<!-- ENDIF config.hideCategoryLastPost -->">
@@ -36,3 +36,11 @@
 		</ul>
 	</div>
 </div>
+
+<style media="screen">
+	.c_custom{
+		border: 1px solid #eeeeee;
+    border-radius: 50px;
+    margin: 2px;
+	}
+</style>

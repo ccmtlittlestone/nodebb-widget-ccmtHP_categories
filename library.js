@@ -16,6 +16,9 @@
 	var translator = module.parent.require('../public/src/modules/translator');
 	var templates = module.parent.require('templates.js');
 	var websockets = module.parent.require('./socket.io');
+	var settings = module.parent.require('./settings');
+	var socketAdmin = module.parent.require('./socket.io/admin');
+	var defaultSettings = { title: 'Recent Topics', opacity: '1.0', textShadow: 'none', enableCarousel: 1, enableCarouselPagination: 1 };
 	var app;
 
 
@@ -31,6 +34,11 @@
 		router.get('/admin/plugins/ccmtHP_categories', hostMiddleware.admin.buildHeader, Widget.renderAdminPage);
 		router.get('/api/admin/plugins/ccmtHP_categories', Widget.renderAdminPage);
 		callback();
+
+		Widget.settings = new settings('ccmtHP_categories', '1.0.0', defaultSettings);
+		socketAdmin.settings.syncCcmtHP_categories = function () {
+			Widget.settings.sync();
+		};
 	};
 
 	Widget.renderAdminPage = function(req,res,next){
@@ -62,7 +70,8 @@
 
 	Widget.renderCcmtHP_categories=function(widget,callback){
 		const uid=widget.req.uid;
-		categories.getAllCategories(uid,function(err,cate){
+		widget.data.cids=Widget.settings.get('cids').split(",");
+		categories.getCategories(widget.data.cids,uid,function(err,cate){
 			app.render('widgets/ccmtHP_categories',{categories:cate},callback);
 		})
 
